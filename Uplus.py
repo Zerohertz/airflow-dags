@@ -5,6 +5,10 @@ from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
     KubernetesPodOperator,
 )
 
+from Lib import Environment
+
+ENV = Environment("UPLUS")
+
 
 @dag(
     dag_id="Uplus",
@@ -15,7 +19,19 @@ from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
 )
 def Uplus():
     Uplus = KubernetesPodOperator(
-        task_id="Uplus", name="Uplus", image="airflow-uplus:v1",
+        task_id="Uplus",
+        name="Uplus",
+        image="airflow-uplus:v1",
+        env_vars={
+            "WEBHOOK": ENV.WEBHOOK,
+            "USER_ID": ENV.USER_ID,
+            "USER_PASSWORD": ENV.USER_PASSWORD,
+            "CARD_NO": ENV.CARD_NO,
+            "NAME": ENV.NAME,
+            "BIRTH": ENV.BIRTH,
+            "CARD_YEAR": ENV.CARD_YEAR,
+            "CARD_MONTH": ENV.CARD_MONTH,
+        },
     )
 
     Uplus

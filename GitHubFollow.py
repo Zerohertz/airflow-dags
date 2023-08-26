@@ -4,18 +4,18 @@ import time
 
 import requests
 from airflow.decorators import dag
-from airflow.models.variable import Variable
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 
-TOKEN = Variable.get("GITHUB_TOKEN_API")
-HEADER = f"--header 'Authorization: Bearer {TOKEN}'"
-WEBHOOK = Variable.get("DISCORD_WEBHOOK_GITHUB")
+from Lib import Environment
+
+ENV = Environment("GITHUB-FOLLOW")
+HEADER = f"--header 'Authorization: Bearer {ENV.TOKEN}'"
 
 
 def _get_followers_from_github(username):
     url = f"https://api.github.com/users/{username}"
-    headers = {"Authorization": f"Bearer {TOKEN}"}
+    headers = {"Authorization": f"Bearer {ENV.TOKEN}"}
     response = requests.get(url, headers=headers)
     data = response.json()
     time.sleep(2)
@@ -87,7 +87,7 @@ def _check_follow(ti):
     result = _check(result_from_git_followers, result_from_git_following)
     messages = _make_result(result)
     for message in messages:
-        _send_discord_message(WEBHOOK, message)
+        _send_discord_message(ENV.WEBHOOK, message)
         time.sleep(2)
 
 
@@ -101,7 +101,7 @@ def github_follow():
     git_followers = BashOperator(
         task_id="git_followers",
         bash_command=(
-            f"""result=$(curl {HEADER} -s 'https://api.github.com/users/Zerohertz/followers?per_page=200'); """
+            f"""result=$(curl {HEADER} -s 'https://api.github.com/users/{ENV.ID}/followers?per_page={ENV.PER_PAGE}'); """
             """echo \"$result\" | tr -d '\n'"""
         ),
     )
@@ -109,7 +109,7 @@ def github_follow():
     git_following = BashOperator(
         task_id="git_following",
         bash_command=(
-            f"""result=$(curl {HEADER} -s 'https://api.github.com/users/Zerohertz/following?per_page=200'); """
+            f"""result=$(curl {HEADER} -s 'https://api.github.com/users/{ENV.ID}/following?per_page={ENV.PER_PAGE}'); """
             """echo \"$result\" | tr -d '\n'"""
         ),
     )
