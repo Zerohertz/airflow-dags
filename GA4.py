@@ -14,7 +14,7 @@ ENV = Environment("GA4")
 @dag(
     dag_id="GA-4",
     start_date=dt.datetime(1998, 10, 23),
-    schedule_interval="0 1 * * *",
+    schedule_interval="0 10 * * *",
     max_active_runs=1,
     catchup=False,
     tags=["Discord", "Google Analytics 4"],

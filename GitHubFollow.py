@@ -94,7 +94,7 @@ def _check_follow(ti):
 @dag(
     dag_id="GitHub-Follow",
     start_date=dt.datetime(1998, 10, 23),
-    schedule_interval="0 8 * * *",
+    schedule_interval="0 17 * * *",
     catchup=False,
     tags=["Discord", "GitHub"],
 )
