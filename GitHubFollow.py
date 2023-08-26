@@ -96,6 +96,7 @@ def _check_follow(ti):
     start_date=dt.datetime(1998, 10, 23),
     schedule_interval="0 8 * * *",
     catchup=False,
+    tags=["Discord", "GitHub"],
 )
 def github_follow():
     git_followers = BashOperator(

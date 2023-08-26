@@ -16,6 +16,7 @@ ENV = Environment("UPLUS")
     schedule_interval="0 0 * * *",
     max_active_runs=1,
     catchup=False,
+    tags=["Discord"],
 )
 def Uplus():
     Uplus = KubernetesPodOperator(

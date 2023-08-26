@@ -12,6 +12,7 @@ ENV = Environment("GITHUB-STATUS")
     start_date=airflow.utils.dates.days_ago(0),
     schedule_interval="*/15 * * * *",
     catchup=False,
+    tags=["GitHub"],
 )
 def git_status():
     git_status = BashOperator(
