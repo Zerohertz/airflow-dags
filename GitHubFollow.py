@@ -7,7 +7,7 @@ from airflow.decorators import dag
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 
-from Lib import Environment
+from lib import Environment
 
 ENV = Environment("GITHUB-FOLLOW")
 HEADER = f"--header 'Authorization: Bearer {ENV.TOKEN}'"

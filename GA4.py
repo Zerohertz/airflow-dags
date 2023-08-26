@@ -6,7 +6,7 @@ from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
     KubernetesPodOperator,
 )
 
-from Lib import Environment
+from lib import Environment
 
 ENV = Environment("GA4")
 
@@ -22,7 +22,7 @@ def GA4():
     GA4 = KubernetesPodOperator(
         task_id="GA4",
         name="GA4",
-        image="airflow-ga4:v1",
+        image="zerohertzkr/airflow-ga4",
         env_vars={
             "KEY": json.dumps(ENV.KEY),
             "PROPERTY_ID": ENV.PROPERTY_ID,

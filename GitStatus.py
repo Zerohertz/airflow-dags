@@ -2,7 +2,7 @@ import airflow
 from airflow.decorators import dag
 from airflow.operators.bash import BashOperator
 
-from Lib import Environment
+from lib import Environment
 
 ENV = Environment("GITHUB-STATUS")
 
