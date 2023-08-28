@@ -20,7 +20,7 @@ def _generate_queries(ts):
 
 
 @dag(
-    dag_id="Continuous-Training-13",
+    dag_id="Continuous-Training",
     start_date=airflow.utils.dates.days_ago(2),
     end_date=airflow.utils.dates.days_ago(1),
     schedule_interval="@hourly",
