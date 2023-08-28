@@ -1,11 +1,12 @@
-import datetime as dt
-
 import airflow
 import numpy as np
 from airflow.decorators import dag
 from airflow.operators.python_operator import PythonOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from dateutil.parser import parse
+from lib import Environment
+
+ENV = Environment("CT")
 
 CLASSES = ["A", "B"]
 NO_DATA = 10
@@ -54,7 +55,7 @@ def _merge_queries(ti):
 def create_data():
     create_table = PostgresOperator(
         task_id="create_table",
-        postgres_conn_id="zerohertz-db",
+        postgres_conn_id=ENV.DB,
         sql="""
         CREATE TABLE IF NOT EXISTS
         CONTINUOUS_TRAINING (
@@ -82,8 +83,8 @@ def create_data():
     )
 
     push_data = PostgresOperator(
-        task_id=f"push_data",
-        postgres_conn_id="zerohertz-db",
+        task_id="push_data",
+        postgres_conn_id=ENV.DB,
         sql="{{ ti.xcom_pull(task_ids='merge_queries', key='return_value') }}",
     )
 
