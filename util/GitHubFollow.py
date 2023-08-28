@@ -6,8 +6,7 @@ import requests
 from airflow.decorators import dag
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
-
-from lib import Environment
+from lib import Environment, _send_discord_message
 
 ENV = Environment("GITHUB-FOLLOW")
 HEADER = f"--header 'Authorization: Bearer {ENV.TOKEN}'"
@@ -70,13 +69,6 @@ def _make_result(result):
                 res += tmp
     messages.append(res)
     return messages
-
-
-def _send_discord_message(webhook_url, content):
-    data = {"content": content}
-    headers = {"Content-Type": "application/json"}
-    response = requests.post(webhook_url, data=json.dumps(data), headers=headers)
-    return response
 
 
 def _check_follow(ti):
