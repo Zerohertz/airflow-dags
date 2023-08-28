@@ -1,3 +1,5 @@
+import math
+
 import airflow
 import numpy as np
 from airflow.decorators import dag
@@ -10,20 +12,36 @@ ENV = Environment("CT")
 
 
 def _mean(time, class_name):
+    """
+    NOTE: 시간과 Class에 따른 평균 X, Y 조회
+    SELECT 
+    time,
+    class,
+    AVG(x) AS avg_x,
+    AVG(y) AS avg_y
+    FROM 
+        continuous_training
+    WHERE 
+        class IN ('A', 'B') 
+    GROUP BY 
+        time, class
+    ORDER BY 
+        time, class;
+    """
     idx = ENV.CLASSES.index(class_name)
-    time /= 12
-    if idx == 0:
-        mean_x = time
-    elif idx == 1:
-        mean_x = 2 - time
-    mean_y = time ** 2
+    time = time / 24 * 2 * math.pi
+    mean_x = math.sqrt(ENV.RADIUS) * math.cos(
+        time + 2 * math.pi * idx / len(ENV.CLASSES)
+    )
+    mean_y = math.sqrt(ENV.RADIUS) * math.sin(
+        time + 2 * math.pi * idx / len(ENV.CLASSES)
+    )
     return mean_x, mean_y
 
 
 def _generate_queries(class_name, num_entries, ts):
     queries = []
     mean_x, mean_y = _mean(int(ts[11:13]), class_name)
-    print("=" * 10)
     ts = parse(ts)
     for _ in range(num_entries):
         x = np.random.normal(mean_x, 1)
@@ -46,7 +64,7 @@ def _merge_queries(ti):
     start_date=airflow.utils.dates.days_ago(2),
     end_date=airflow.utils.dates.days_ago(1),
     schedule_interval="@hourly",
-    max_active_runs=1,
+    max_active_runs=12,
     catchup=True,
     tags=["MLOps", "Data Engineering"],
 )
