@@ -14,18 +14,18 @@ ENV = Environment("CT")
 def _mean(time, class_name):
     """
     NOTE: 시간과 Class에 따른 평균 X, Y 조회
-    SELECT 
+    SELECT
     time,
     class,
     AVG(x) AS avg_x,
     AVG(y) AS avg_y
-    FROM 
+    FROM
         continuous_training
-    WHERE 
-        class IN ('A', 'B') 
-    GROUP BY 
+    WHERE
+        class IN ('A', 'B', 'C')
+    GROUP BY
         time, class
-    ORDER BY 
+    ORDER BY
         time, class;
     """
     idx = ENV.CLASSES.index(class_name)

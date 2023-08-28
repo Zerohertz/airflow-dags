@@ -16,7 +16,7 @@ ENV = Environment("CT")
 )
 def reset_db():
     reset = PostgresOperator(
-        task_id="create_table",
+        task_id="reset_db",
         postgres_conn_id=ENV.DB,
         sql="DROP TABLE continuous_training;",
     )
