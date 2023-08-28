@@ -6,7 +6,7 @@ from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
 )
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from dateutil.parser import parse
-from lib import Environment
+from lib import Environment, _send_discord_message
 
 ENV = Environment("CT")
 
@@ -26,7 +26,7 @@ def _generate_queries(ts):
     end_date=airflow.utils.dates.days_ago(1),
     schedule_interval="@hourly",
     max_active_runs=1,
-    catchup=False,
+    catchup=True,
     tags=["MLOps", "Continuous Training"],
 )
 def continuous_training():
@@ -40,9 +40,18 @@ def continuous_training():
         sql="{{ ti.xcom_pull(task_ids='generate_queries', key='return_value') }}",
     )
 
-    get_data = KubernetesPodOperator(
-        task_id="get_data",
-        name="get_data",
+    send_training_log = PythonOperator(
+        task_id="send_training_log",
+        python_callable=_send_discord_message,
+        op_kwargs={
+            "webhook_url": ENV.WEBHOOK,
+            "content": ":computer: [{{ ts }}]: TRAINING START!",
+        },
+    )
+
+    training = KubernetesPodOperator(
+        task_id="training",
+        name="training",
         image="zerohertzkr/airflow-continuous-training",
         arguments=[
             "{{ task_instance.xcom_pull(task_ids='fetch_recent_data', key='return_value') }}"
@@ -50,7 +59,7 @@ def continuous_training():
         env_vars={"WEBHOOK": ENV.WEBHOOK, "CLASSES": str(ENV.CLASSES)},
     )
 
-    generate_queries >> fetch_recent_data >> get_data
+    generate_queries >> fetch_recent_data >> [send_training_log, training]
 
 
 DAG = continuous_training()
