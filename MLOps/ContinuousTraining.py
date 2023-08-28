@@ -14,13 +14,13 @@ def _generate_queries(ts):
     ts = parse(ts)
     return f"""
             SELECT * FROM continuous_training
-            WHERE time >= TIMESTAMP '{ts.strftime('%Y-%m-%d %H:%M:%S%z')}'
-            AND time <= TIMESTAMP '{ts.strftime('%Y-%m-%d %H:%M:%S%z')}' + INTERVAL '2 hours';
+            WHERE time >= TIMESTAMP '{ts.strftime('%Y-%m-%d %H:%M:%S%z')}' - INTERVAL '2 hours'
+            AND time <= TIMESTAMP '{ts.strftime('%Y-%m-%d %H:%M:%S%z')}';
             """
 
 
 @dag(
-    dag_id="Continuous-Training",
+    dag_id="Continuous-Training-13",
     start_date=airflow.utils.dates.days_ago(2),
     end_date=airflow.utils.dates.days_ago(1),
     schedule_interval="@hourly",
