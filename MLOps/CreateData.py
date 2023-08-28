@@ -8,12 +8,9 @@ from lib import Environment
 
 ENV = Environment("CT")
 
-CLASSES = ["A", "B"]
-NO_DATA = 10
-
 
 def _mean(time, class_name):
-    idx = CLASSES.index(class_name)
+    idx = ENV.CLASSES.index(class_name)
     time /= 12
     if idx == 0:
         mean_x = time
@@ -39,7 +36,7 @@ def _generate_queries(class_name, num_entries, ts):
 
 def _merge_queries(ti):
     queries = []
-    for c in CLASSES:
+    for c in ENV.CLASSES:
         queries.append(ti.xcom_pull(task_ids=f"generate_data_{c}"))
     return "\n".join(queries)
 
@@ -47,6 +44,7 @@ def _merge_queries(ti):
 @dag(
     dag_id="Create-Data",
     start_date=airflow.utils.dates.days_ago(2),
+    end_date=airflow.utils.dates.days_ago(1),
     schedule_interval="@hourly",
     max_active_runs=1,
     catchup=True,
@@ -69,17 +67,17 @@ def create_data():
 
     generate_queries = []
 
-    for c in CLASSES:
+    for c in ENV.CLASSES:
         generate_query = PythonOperator(
             task_id=f"generate_data_{c}",
             python_callable=_generate_queries,
-            op_args=[c, NO_DATA],
+            op_args=[c, ENV.NO_DATA],
             do_xcom_push=True,
         )
         generate_queries.append(generate_query)
 
     merge_queries = PythonOperator(
-        task_id=f"merge_queries", python_callable=_merge_queries, do_xcom_push=True,
+        task_id="merge_queries", python_callable=_merge_queries, do_xcom_push=True,
     )
 
     push_data = PostgresOperator(
