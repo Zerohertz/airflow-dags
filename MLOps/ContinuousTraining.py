@@ -56,7 +56,11 @@ def continuous_training():
         arguments=[
             "{{ task_instance.xcom_pull(task_ids='fetch_recent_data', key='return_value') }}"
         ],
-        env_vars={"WEBHOOK": ENV.WEBHOOK, "CLASSES": str(ENV.CLASSES)},
+        env_vars={
+            "WEBHOOK": ENV.WEBHOOK,
+            "CLASSES": str(ENV.CLASSES),
+            "TIME": "{{ ts }}",
+        },
     )
 
     generate_queries >> fetch_recent_data >> [send_training_log, training]
