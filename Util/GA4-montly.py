@@ -11,9 +11,9 @@ ENV = Environment("GA4")
 
 
 @dag(
-    dag_id="GA-4",
+    dag_id="GA-4-Montly",
     start_date=dt.datetime(1998, 10, 23),
-    schedule_interval="0 10 * * *",
+    schedule_interval="0 11 1,11,21 * *",
     max_active_runs=1,
     catchup=False,
     tags=["Discord", "Google Analytics 4"],
@@ -27,6 +27,7 @@ def GA4():
             "KEY": json.dumps(ENV.KEY),
             "PROPERTY_ID": ENV.PROPERTY_ID,
             "WEBHOOK": ENV.WEBHOOK,
+            "PER": "30",
         },
     )
 
