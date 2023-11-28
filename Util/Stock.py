@@ -23,7 +23,7 @@ volume_mount = V1VolumeMount(name="stock-pvc", mount_path="/app/data", read_only
     schedule_interval="1,31 9-15 * * 1-5",
     max_active_runs=1,
     catchup=False,
-    tags=["Discord"],
+    tags=["zerohertzLib", "Discord"],
 )
 def Stock():
     Stock = KubernetesPodOperator(
