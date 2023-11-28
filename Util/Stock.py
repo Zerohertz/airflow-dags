@@ -4,10 +4,17 @@ from airflow.decorators import dag
 from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
     KubernetesPodOperator,
 )
+from kubernetes.client.models import V1Volume, V1VolumeMount
 
 from lib import Environment
 
 ENV = Environment("STOCK")
+
+volume_config = V1Volume(
+    name="stock-pvc",
+    persistent_volume_claim={"claimName": "airflow-stock-pvc"},
+)
+volume_mount = V1VolumeMount(name="stock-pvc", mount_path="/app/data", read_only=True)
 
 
 @dag(
@@ -25,8 +32,9 @@ def Stock():
         image="zerohertzkr/airflow-stock",
         env_vars={
             "WEBHOOK": ENV.WEBHOOK,
-            "STOCK": str(ENV.STOCK),
         },
+        volumes=[volume_config],
+        volume_mounts=[volume_mount],
     )
 
     Stock
