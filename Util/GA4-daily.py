@@ -27,7 +27,7 @@ def GA4():
         env_vars={
             "KEY": json.dumps(ENV.KEY),
             "PROPERTY_ID": ENV.PROPERTY_ID,
-            "WEBHOOK": ENV.WEBHOOK,
+            "SLACK": ENV.SLACK,
             "PER": "1",
         },
     )
