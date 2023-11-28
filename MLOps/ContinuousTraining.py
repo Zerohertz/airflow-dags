@@ -5,6 +5,7 @@ from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
     KubernetesPodOperator,
 )
 from dateutil.parser import parse
+
 from lib import Environment, _send_discord_message
 
 ENV = Environment("CT")

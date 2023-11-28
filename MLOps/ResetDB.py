@@ -1,6 +1,7 @@
 import airflow
 from airflow.decorators import dag
 from airflow.providers.postgres.operators.postgres import PostgresOperator
+
 from lib import Environment
 
 ENV = Environment("CT")

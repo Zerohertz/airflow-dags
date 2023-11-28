@@ -6,6 +6,7 @@ from airflow.decorators import dag
 from airflow.operators.python_operator import PythonOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from dateutil.parser import parse
+
 from lib import Environment
 
 ENV = Environment("CT")
@@ -95,7 +96,9 @@ def create_data():
         generate_queries.append(generate_query)
 
     merge_queries = PythonOperator(
-        task_id="merge_queries", python_callable=_merge_queries, do_xcom_push=True,
+        task_id="merge_queries",
+        python_callable=_merge_queries,
+        do_xcom_push=True,
     )
 
     push_data = PostgresOperator(

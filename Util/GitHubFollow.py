@@ -6,6 +6,7 @@ import requests
 from airflow.decorators import dag
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
+
 from lib import Environment, _send_discord_message
 
 ENV = Environment("GITHUB-FOLLOW")
@@ -108,7 +109,8 @@ def github_follow():
     )
 
     check_follow = PythonOperator(
-        task_id="check_follow", python_callable=_check_follow,
+        task_id="check_follow",
+        python_callable=_check_follow,
     )
 
     [git_followers, git_following] >> check_follow

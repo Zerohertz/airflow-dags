@@ -1,6 +1,7 @@
 import airflow
 from airflow.decorators import dag
 from airflow.operators.bash import BashOperator
+
 from lib import Environment
 
 ENV = Environment("GITHUB-STATUS")
@@ -15,7 +16,8 @@ ENV = Environment("GITHUB-STATUS")
 )
 def git_status():
     git_status = BashOperator(
-        task_id="curl_status", bash_command=(f"curl {ENV.STATUS_URL}"),
+        task_id="curl_status",
+        bash_command=(f"curl {ENV.STATUS_URL}"),
     )
 
     git_status
