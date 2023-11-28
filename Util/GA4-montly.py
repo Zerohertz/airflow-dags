@@ -17,7 +17,7 @@ ENV = Environment("GA4")
     schedule_interval="0 11 1,11,21 * *",
     max_active_runs=1,
     catchup=False,
-    tags=["Discord", "Google Analytics 4"],
+    tags=["zerohertzLib", "Slack", "Google Analytics 4"],
 )
 def GA4():
     GA4 = KubernetesPodOperator(

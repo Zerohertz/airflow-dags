@@ -16,7 +16,7 @@ ENV = Environment("UPLUS")
     schedule_interval="0 9 * * *",
     max_active_runs=1,
     catchup=False,
-    tags=["Discord"],
+    tags=["zerohertzLib", "Slack"],
 )
 def Uplus():
     Uplus = KubernetesPodOperator(
@@ -24,7 +24,7 @@ def Uplus():
         name="Uplus",
         image="zerohertzkr/airflow-uplus",
         env_vars={
-            "WEBHOOK": ENV.WEBHOOK,
+            "SLACK": ENV.SLACK,
             "USER_ID": ENV.USER_ID,
             "USER_PASSWORD": ENV.USER_PASSWORD,
             "CARD_NO": ENV.CARD_NO,

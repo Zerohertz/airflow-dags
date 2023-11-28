@@ -23,7 +23,7 @@ volume_mount = V1VolumeMount(name="stock-pvc", mount_path="/app/data", read_only
     schedule_interval="1,31 9-15 * * 1-5",
     max_active_runs=1,
     catchup=False,
-    tags=["zerohertzLib", "Discord"],
+    tags=["zerohertzLib", "Slack"],
 )
 def Stock():
     Stock = KubernetesPodOperator(
@@ -31,7 +31,7 @@ def Stock():
         name="Stock",
         image="zerohertzkr/airflow-stock",
         env_vars={
-            "WEBHOOK": ENV.WEBHOOK,
+            "SLACK": ENV.SLACK,
         },
         volumes=[volume_config],
         volume_mounts=[volume_mount],
