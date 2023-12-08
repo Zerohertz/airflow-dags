@@ -33,7 +33,7 @@ def Stock():
         env_vars={
             "SLACK": ENV.SLACK,
             "START_DAY": "20200101",
-            "MP_NUM": "2",
+            "MP_NUM": "8",
             "KOR": "0",
         },
         volumes=[volume_config],

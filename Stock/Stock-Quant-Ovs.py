@@ -28,7 +28,7 @@ def Stock():
             "SLACK": ENV.SLACK,
             "START_DAY": "20200101",
             "TOP": "4",
-            "MP_NUM": "2",
+            "MP_NUM": "8",
             "KOR": "0",
         },
     )
