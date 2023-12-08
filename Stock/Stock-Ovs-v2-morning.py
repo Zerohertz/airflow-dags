@@ -5,7 +5,6 @@ from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
     KubernetesPodOperator,
 )
 from kubernetes.client.models import V1Volume, V1VolumeMount
-
 from lib import Environment
 
 ENV = Environment("STOCK")
@@ -14,7 +13,7 @@ volume_config = V1Volume(
     name="stock-pvc",
     persistent_volume_claim={"claimName": "airflow-stock-pvc"},
 )
-volume_mount = V1VolumeMount(name="stock-pvc", mount_path="/app/stock", read_only=True)
+volume_mount = V1VolumeMount(name="stock-pvc", mount_path="/app/stock", read_only=False)
 
 
 @dag(
