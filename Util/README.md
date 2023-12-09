@@ -3,10 +3,10 @@
 > [Apache Airflow 기반 자동결제 DAG 개발](https://zerohertz.github.io/airflow-auto-payment/)
 
 <div align = "center">
-    <img width="500" alt="image" src="https://github-production-user-asset-6210df.s3.amazonaws.com/42334717/289085310-7afdcfc4-8cea-40d9-8de7-7da78885b872.png">
+    <img width="500" alt="image" src="https://github-production-user-asset-6210df.s3.amazonaws.com/42334717/289230678-78a50a67-82f4-4b94-a90a-9e1f6841860d.png">
 </div>
 
-## [GitHub-Follow](https://github.com/Zerohertz/airflow-dags/blob/main/Util/GitHubFollow.py)
+ㄷ## [GitHub-Follow](https://github.com/Zerohertz/airflow-dags/blob/main/Util/GitHubFollow.py)
 
 > GitHub의 Follow 상태 알림
 
