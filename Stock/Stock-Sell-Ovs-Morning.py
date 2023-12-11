@@ -18,9 +18,9 @@ volume_mount = V1VolumeMount(name="stock-pvc", mount_path="/app/stock", read_onl
 
 
 @dag(
-    dag_id="Stock-V2-Ovs-Night",
+    dag_id="Stock-Sell-Ovs-Morning",
     start_date=dt.datetime(1998, 10, 23),
-    schedule_interval="40 23 * * 1-5",
+    schedule_interval="10 7 * * 2-6",
     max_active_runs=1,
     catchup=False,
     tags=["zerohertzLib", "Slack", "Stock"],
@@ -29,7 +29,7 @@ def Stock():
     Stock = KubernetesPodOperator(
         task_id="Stock",
         name="Stock",
-        image="zerohertzkr/airflow-stock-v2",
+        image="zerohertzkr/airflow-stock-sell",
         env_vars={
             "SLACK": ENV.SLACK,
             "START_DAY": "20200101",

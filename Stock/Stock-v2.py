@@ -18,9 +18,9 @@ volume_mount = V1VolumeMount(name="stock-pvc", mount_path="/app/stock", read_onl
 
 
 @dag(
-    dag_id="Stock-V2-Ovs-Morning",
+    dag_id="Stock-V2",
     start_date=dt.datetime(1998, 10, 23),
-    schedule_interval="10 7 * * 2-6",
+    schedule_interval="1,31 9-15 * * 1-5",
     max_active_runs=1,
     catchup=False,
     tags=["zerohertzLib", "Slack", "Stock"],
@@ -32,9 +32,7 @@ def Stock():
         image="zerohertzkr/airflow-stock-v2",
         env_vars={
             "SLACK": ENV.SLACK,
-            "START_DAY": "20200101",
-            "MP_NUM": "8",
-            "KOR": "0",
+            "KOR": "1",
         },
         volumes=[volume_config],
         volume_mounts=[volume_mount],

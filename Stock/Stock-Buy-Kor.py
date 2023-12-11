@@ -11,9 +11,9 @@ ENV = Environment("STOCK")
 
 
 @dag(
-    dag_id="Quant-Ovs",
+    dag_id="Stock-Buy-Kor",
     start_date=dt.datetime(1998, 10, 23),
-    schedule_interval="45 23 * * 1-5",
+    schedule_interval="30 9,13 * * 1-5",
     max_active_runs=1,
     catchup=False,
     tags=["zerohertzLib", "Slack", "Stock"],
@@ -22,14 +22,14 @@ def Stock():
     Stock = KubernetesPodOperator(
         task_id="Stock",
         name="Stock",
-        image="zerohertzkr/airflow-quant",
+        image="zerohertzkr/airflow-stock-buy",
         env_vars={
             "SYMBOLS": "100",
             "SLACK": ENV.SLACK,
             "START_DAY": "20200101",
             "TOP": "4",
             "MP_NUM": "8",
-            "KOR": "0",
+            "KOR": "1",
         },
     )
 
