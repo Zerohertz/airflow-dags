@@ -4,22 +4,16 @@ from airflow.decorators import dag
 from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
     KubernetesPodOperator,
 )
-from kubernetes.client.models import V1Volume, V1VolumeMount
+
 from lib import Environment
 
 ENV = Environment("STOCK")
 
-volume_config = V1Volume(
-    name="stock-pvc",
-    persistent_volume_claim={"claimName": "airflow-stock-pvc"},
-)
-volume_mount = V1VolumeMount(name="stock-pvc", mount_path="/app/stock", read_only=False)
-
 
 @dag(
-    dag_id="Stock-Ovs-V2-Morning",
+    dag_id="Quant-Ovs",
     start_date=dt.datetime(1998, 10, 23),
-    schedule_interval="10 7 * * 2-6",
+    schedule_interval="45 23 * * 1-5",
     max_active_runs=1,
     catchup=False,
     tags=["zerohertzLib", "Slack", "Stock"],
@@ -28,15 +22,15 @@ def Stock():
     Stock = KubernetesPodOperator(
         task_id="Stock",
         name="Stock",
-        image="zerohertzkr/airflow-stock-v2",
+        image="zerohertzkr/airflow-quant",
         env_vars={
+            "SYMBOLS": "100",
             "SLACK": ENV.SLACK,
             "START_DAY": "20200101",
+            "TOP": "4",
             "MP_NUM": "8",
             "KOR": "0",
         },
-        volumes=[volume_config],
-        volume_mounts=[volume_mount],
     )
 
 

@@ -37,7 +37,5 @@ def Stock():
         volume_mounts=[volume_mount],
     )
 
-    Stock
-
 
 DAG = Stock()

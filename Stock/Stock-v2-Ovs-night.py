@@ -5,6 +5,7 @@ from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
     KubernetesPodOperator,
 )
 from kubernetes.client.models import V1Volume, V1VolumeMount
+
 from lib import Environment
 
 ENV = Environment("STOCK")
@@ -17,7 +18,7 @@ volume_mount = V1VolumeMount(name="stock-pvc", mount_path="/app/stock", read_onl
 
 
 @dag(
-    dag_id="Stock-Ovs-V2-Night",
+    dag_id="Stock-V2-Ovs-Night",
     start_date=dt.datetime(1998, 10, 23),
     schedule_interval="40 23 * * 1-5",
     max_active_runs=1,
