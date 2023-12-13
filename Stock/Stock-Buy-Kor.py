@@ -4,6 +4,7 @@ from airflow.decorators import dag
 from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
     KubernetesPodOperator,
 )
+
 from lib import Environment
 
 ENV = Environment("STOCK")
@@ -27,7 +28,7 @@ def Stock():
             "SYMBOLS": "100",
             "START_DAY": "20200101",
             "TOP": "4",
-            "MP_NUM": "8",
+            "MP_NUM": "10",
             "KOR": "1",
         },
     )
