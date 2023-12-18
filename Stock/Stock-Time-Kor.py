@@ -20,7 +20,7 @@ volume_mount = V1VolumeMount(name="stock-pvc", mount_path="/app/stock", read_onl
 @dag(
     dag_id="Stock-Time",
     start_date=dt.datetime(1998, 10, 23),
-    schedule_interval="40 10 * * 1-5",
+    schedule_interval="40 10,14 * * 1-5",
     max_active_runs=1,
     catchup=False,
     tags=["zerohertzLib", "Slack", "Stock"],
