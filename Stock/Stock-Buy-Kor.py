@@ -24,11 +24,11 @@ def Stock():
         name="Stock",
         image="zerohertzkr/airflow-stock-buy",
         env_vars={
+            "SYMBOLS": ENV.SYMBOLS,
+            "START_DAY": ENV.START_DAY,
+            "TOP": ENV.TOP,
             "SLACK": ENV.SLACK,
-            "SYMBOLS": "100",
-            "START_DAY": "20200101",
-            "TOP": "4",
-            "MP_NUM": "10",
+            "MP_NUM": ENV.MP_NUM,
             "KOR": "1",
         },
     )

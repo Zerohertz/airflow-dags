@@ -31,9 +31,9 @@ def Stock():
         name="Stock",
         image="zerohertzkr/airflow-stock-sell",
         env_vars={
+            "START_DAY": ENV.START_DAY,
+            "TOP": ENV.TOP,
             "SLACK": ENV.SLACK,
-            "START_DAY": "20200101",
-            "TOP": "4",
             "MP_NUM": "2",
             "KOR": "0",
         },

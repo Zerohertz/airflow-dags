@@ -13,7 +13,7 @@ ENV = Environment("UPLUS")
 @dag(
     dag_id="Uplus",
     start_date=dt.datetime(1998, 10, 23),
-    schedule_interval="0 9 * * *",
+    schedule_interval="0 8 * * *",
     max_active_runs=1,
     catchup=False,
     tags=["zerohertzLib", "Slack"],
