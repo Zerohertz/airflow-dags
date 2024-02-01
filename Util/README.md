@@ -19,5 +19,5 @@
 > [Apache Airflow 기반 Google Analytics 4 API를 통한 블로그 사용자 정보 전달 자동화](https://zerohertz.github.io/airflow-ga4-api/)
 
 <div align = "center">
-    <img alt="image" src="https://github-production-user-asset-6210df.s3.amazonaws.com/42334717/290219899-1c2c9e61-1344-4410-885a-c712cf9ccc81.png">
+    <img alt="image" src="https://github.com/Zerohertz/Zerohertz/assets/42334717/b09488c1-7ece-4252-9fdf-fd76cdde4eba">
 </div>
