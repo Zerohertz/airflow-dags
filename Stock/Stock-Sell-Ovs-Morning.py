@@ -26,9 +26,9 @@ volume_mount = V1VolumeMount(name="stock-pvc", mount_path="/app/stock", read_onl
     tags=["zerohertzLib", "Slack", "Stock"],
 )
 def Stock():
-    Stock = KubernetesPodOperator(
-        task_id="Stock",
-        name="Stock",
+    Stock_sell = KubernetesPodOperator(
+        task_id="Stock-Sell",
+        name="Stock-Sell",
         image="zerohertzkr/airflow-stock-sell",
         env_vars={
             "START_DAY": ENV.START_DAY,
@@ -36,10 +36,23 @@ def Stock():
             "SLACK": ENV.SLACK,
             "MP_NUM": "2",
             "KOR": "0",
+            "ACCOUNT": "NORMAL",
         },
         volumes=[volume_config],
         volume_mounts=[volume_mount],
     )
+    Stock_balance = KubernetesPodOperator(
+        task_id="Stock-Balance",
+        name="Stock-Balance",
+        image="zerohertzkr/airflow-stock-v3",
+        env_vars={
+            "SLACK": ENV.SLACK,
+        },
+        volumes=[volume_config],
+        volume_mounts=[volume_mount],
+    )
+
+    Stock_sell >> Stock_balance
 
 
 DAG = Stock()

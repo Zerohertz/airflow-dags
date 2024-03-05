@@ -32,7 +32,6 @@ def Stock():
         image="zerohertzkr/airflow-stock-time",
         env_vars={
             "SLACK": ENV.SLACK,
-            "KOR": "1",
         },
         volumes=[volume_config],
         volume_mounts=[volume_mount],
