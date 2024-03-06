@@ -36,7 +36,7 @@ def Stock():
             "SLACK": ENV.SLACK,
             "MP_NUM": "2",
             "KOR": "1",
-            "ACCOUNT": "NORMAL",
+            "ACCOUNT": ENV.NORMAL,
         },
         volumes=[volume_config],
         volume_mounts=[volume_mount],
