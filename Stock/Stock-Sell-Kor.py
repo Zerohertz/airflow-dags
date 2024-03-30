@@ -5,7 +5,6 @@ from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
     KubernetesPodOperator,
 )
 from kubernetes.client.models import V1Volume, V1VolumeMount
-
 from lib import Environment
 
 ENV = Environment("STOCK")
@@ -32,7 +31,6 @@ def Stock():
         image="zerohertzkr/airflow-stock-sell",
         env_vars={
             "START_DAY": ENV.START_DAY,
-            "TOP": ENV.TOP,
             "SLACK": ENV.SLACK,
             "MP_NUM": "2",
             "KOR": "1",
