@@ -24,7 +24,8 @@ def Stock():
         name="Stock",
         image="zerohertzkr/airflow-usd",
         env_vars={
-            "SLACK": ENV.SLACK,
+            "DISCORD_BOT_TOKEN": ENV.DISCORD_BOT_TOKEN,
+            "DISCORD_BOT_CHANNEL": ENV.DISCORD_BOT_CHANNEL["usd"],
         },
     )
 

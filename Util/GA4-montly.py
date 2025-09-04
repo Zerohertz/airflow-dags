@@ -27,7 +27,8 @@ def GA4():
         env_vars={
             "KEY": json.dumps(ENV.KEY),
             "PROPERTY_ID": ENV.PROPERTY_ID,
-            "SLACK": ENV.SLACK,
+            "DISCORD_BOT_TOKEN": ENV.DISCORD_BOT_TOKEN,
+            "DISCORD_BOT_CHANNEL": ENV.DISCORD_BOT_CHANNEL,
             "PER": "30",
         },
     )
