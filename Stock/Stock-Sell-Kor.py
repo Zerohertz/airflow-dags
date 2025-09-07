@@ -5,6 +5,7 @@ from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
     KubernetesPodOperator,
 )
 from kubernetes.client.models import V1Volume, V1VolumeMount
+
 from lib import Environment
 
 ENV = Environment("STOCK")
@@ -22,7 +23,7 @@ volume_mount = V1VolumeMount(name="stock-pvc", mount_path="/app/stock", read_onl
     schedule_interval="30 10,14 * * 1-5",
     max_active_runs=1,
     catchup=False,
-    tags=["zerohertzLib", "Slack", "Stock"],
+    tags=["zerohertzLib", "Discord", "Stock"],
 )
 def Stock():
     Stock = KubernetesPodOperator(
@@ -30,12 +31,13 @@ def Stock():
         name="Stock",
         image="zerohertzkr/airflow-stock-sell",
         env_vars={
-            "START_DAY": ENV.START_DAY,
-            "SLACK": ENV.SLACK,
-            "MP_NUM": "2",
-            "KOR": "1",
             "NORMAL": ENV.NORMAL,
             "ISA": ENV.ISA,
+            "START_DAY": ENV.START_DAY,
+            "DISCORD_BOT_TOKEN": ENV.DISCORD_BOT_TOKEN,
+            "DISCORD_BOT_CHANNEL": ENV.DISCORD_BOT_CHANNEL["kor"],
+            "MP_NUM": ENV.MP_NUM,
+            "KOR": "1",
         },
         volumes=[volume_config],
         volume_mounts=[volume_mount],

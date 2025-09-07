@@ -8,9 +8,3 @@ Util/Jmy.py
 Stock/Stock-v1.py
 Stock/Stock-v2.py
 Stock/Stock-v3.py
-
-Stock/Stock-Buy-Kor.py
-Stock/Stock-Buy-Ovs.py
-Stock/Stock-Sell-Kor.py
-Stock/Stock-Sell-Ovs-Morning.py
-Stock/Stock-Sell-Ovs-Night.py

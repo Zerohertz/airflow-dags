@@ -16,7 +16,7 @@ ENV = Environment("STOCK")
     schedule_interval="45 23 * * 1-5",
     max_active_runs=1,
     catchup=False,
-    tags=["zerohertzLib", "Slack", "Stock"],
+    tags=["zerohertzLib", "Discord", "Stock"],
 )
 def Stock():
     Stock = KubernetesPodOperator(
@@ -27,7 +27,8 @@ def Stock():
             "SYMBOLS": ENV.SYMBOLS,
             "START_DAY": ENV.START_DAY,
             "TOP": ENV.TOP,
-            "SLACK": ENV.SLACK,
+            "DISCORD_BOT_TOKEN": ENV.DISCORD_BOT_TOKEN,
+            "DISCORD_BOT_CHANNEL": ENV.DISCORD_BOT_CHANNEL["ovs"],
             "MP_NUM": ENV.MP_NUM,
             "KOR": "0",
         },

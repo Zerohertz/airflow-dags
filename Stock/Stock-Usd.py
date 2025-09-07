@@ -16,7 +16,7 @@ ENV = Environment("STOCK")
     schedule_interval="0 13 * * *",
     max_active_runs=1,
     catchup=False,
-    tags=["zerohertzLib", "Slack", "Stock"],
+    tags=["zerohertzLib", "Discord", "Stock"],
 )
 def Stock():
     Stock = KubernetesPodOperator(
