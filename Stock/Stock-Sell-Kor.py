@@ -5,7 +5,6 @@ from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
     KubernetesPodOperator,
 )
 from kubernetes.client.models import V1Volume, V1VolumeMount
-
 from lib import Environment
 
 ENV = Environment("STOCK")
