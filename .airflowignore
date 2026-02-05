@@ -5,6 +5,4 @@ Util/GitStatus.py
 Util/Uplus.py
 Util/Jmy.py
 
-Stock/Stock-v1.py
-Stock/Stock-v2.py
-Stock/Stock-v3.py
+Stock/legacy

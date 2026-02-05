@@ -1,0 +1,39 @@
+import datetime as dt
+
+from airflow.decorators import dag
+from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
+    KubernetesPodOperator,
+)
+
+from lib import Environment
+
+ENV = Environment("STOCK")
+
+
+@dag(
+    dag_id="Stock-Fdr-Kor",
+    start_date=dt.datetime(1998, 10, 23),
+    schedule_interval="30 9,13 * * 1-5",
+    max_active_runs=1,
+    catchup=False,
+    tags=["zerohertzLib", "Discord", "Stock"],
+)
+def Stock():
+    Stock = KubernetesPodOperator(
+        task_id="Stock",
+        name="Stock",
+        image="zerohertzkr/airflow-stock-fdr",
+        env_vars={
+            "SYMBOLS": ",".join(ENV.SYMBOLS["kor"].values()),
+            "START_DAY": ENV.START_DAY,
+            "TOP": ENV.TOP,
+            "DISCORD_BOT_TOKEN": ENV.DISCORD_BOT_TOKEN,
+            "DISCORD_BOT_CHANNEL": ENV.DISCORD_BOT_CHANNEL["kor"],
+            "MP_NUM": ENV.MP_NUM,
+            "KOR": "1",
+            "MODE": "All",
+        },
+    )
+
+
+DAG = Stock()
