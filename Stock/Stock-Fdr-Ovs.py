@@ -13,7 +13,7 @@ ENV = Environment("STOCK")
 @dag(
     dag_id="Stock-Fdr-Ovs",
     start_date=dt.datetime(1998, 10, 23),
-    schedule_interval="30,45 23 * * 1-5",
+    schedule_interval="0,45 23 * * 1-5",
     max_active_runs=1,
     catchup=False,
     tags=["zerohertzLib", "Discord", "Stock"],
